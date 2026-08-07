@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Mô Phỏng Thuật Toán Đặt Cược - Học Tập</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background-color: #f0f2f5; padding-top: 50px; }
+        .card { background: white; width: 350px; margin: 0 auto; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .balance { font-size: 24px; color: #2e7d32; font-weight: bold; margin: 15px 0; }
+        button { padding: 10px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; margin: 5px; }
+        .btn-tai { background-color: #d32f2f; color: white; }
+        .btn-xiu { background-color: #1976d2; color: white; }
+        #log { margin-top: 20px; font-weight: bold; color: #333; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>MÔ PHỎNG GAME (TÀI / XỈU)</h2>
+    <p>Số dư ví thử nghiệm:</p>
+    <div class="balance" id="balance">5,000 $</div>
+
+    <p>Đặt cược 100$ vào:</p>
+    <button class="btn-tai" onclick="datCuoc('TAI')">TÀI (11-17)</button>
+    <button class="btn-xiu" onclick="datCuoc('XIU')">XỈU (4-10)</button>
+
+    <div id="log">Hãy chọn một bên để thử thuật toán!</div>
+</div>
+
+<script>
+    let soDu = 5000;
+    const tienCuoc = 100;
+
+    function datCuoc(luachon) {
+        if (soDu < tienCuoc) {
+            document.getElementById('log').innerText = " Lỗi: Bạn đã hết tiền số dư thử nghiệm!";
+            return;
+        }
+
+        soDu -= tienCuoc;
+        capNhatGiaoDien();
+
+        let xien1 = Math.floor(Math.random() * 6) + 1;
+        let xien2 = Math.floor(Math.random() * 6) + 1;
+        let xien3 = Math.floor(Math.random() * 6) + 1;
+        let tongDiem = xien1 + xien2 + xien3;
+
+        let ketQua = (tongDiem >= 11 && tongDiem <= 17) ? 'TAI' : 'XIU';
+
+        let thongBao = `Xúc xắc: ${xien1} - ${xien2} - ${xien3} (Tổng: ${tongDiem} -> ${ketQua}). `;
+        
+        if (luachon === ketQua) {
+            let tienThang = tienCuoc * 2;
+            soDu += tienThang;
+            thongBao += ` THẮNG +${tienCuoc}$!`;
+        } else {
+            thongBao += ` THUA -${tienCuoc}$!`;
+        }
+
+        capNhatGiaoDien();
+        document.getElementById('log').innerText = thongBao;
+    }
+
+    function capNhatGiaoDien() {
+        document.getElementById('balance').innerText = soDu.toLocaleString() + " $";
+    }
+</script>
+
+</body>
+</html>
