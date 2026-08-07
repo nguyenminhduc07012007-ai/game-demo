@@ -11,4 +11,4 @@ app.get('/', (req, res) => {
 const PORT = 3000;
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server đang chạy! Bạn có thể truy cập bằng IP port 3000.`);
-});
+});module.exports = app;
